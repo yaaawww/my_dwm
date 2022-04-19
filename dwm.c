@@ -1419,7 +1419,7 @@ run(void)
 void
 runautostart(void)
 {
-	system("cd ~/scripts; ./autostart.sh &");
+	system("cd ~/my_scripts; ./autostart.sh &");
 }
 
 void
