@@ -1,28 +1,28 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 4;        /* border pixel of windows */
-static const unsigned int gappx     = 6;        /* gaps between windows */
+static const unsigned int borderpx  = 5;        /* border pixel of windows */
+static const unsigned int gappx     = 8;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
-static const int vertpad = 5;
-static const int sidepad = 5;
+static const int vertpad = 0;
+static const int sidepad = 0;
 static const int showbar            = 4;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "monospace:size=14" , "Symbols Nerd Font:size=14", "WenQuanYi Zen Hei Mono:size=14"};
+static const char *fonts[]          = { "monospace:size=14" , "3270Narrow Nerd Font:size=14", "3270SemiNarrow Nerd Font:size=14", "3270Narrow Nerd Font Mono:size=14", "3270SemiNarrow Nerd Font Mono:size=14", "3270Medium Nerd Font:size=14", "3270Medium Nerd Font Mono:size=14", "WenQuanYi Zen Hei Mono:size=14"};
 static const char dmenufont[]       = "monospace:size=14";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#06c9b9";
+static const char col_cyan[]        = "#1f1e33";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
+	[SchemeNorm] = { col_gray3, col_gray2, col_gray2 },
 	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
 };
 
 /* tagging */
-static const char *tags[] = { "", "", "", "", "" };
+static const char *tags[] = { "1", "2", "3", "4", "5" };
 
 static const Rule rules[] = {
 	/* xprop(1):
