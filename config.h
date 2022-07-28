@@ -30,7 +30,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7" };
+static const char *tags[] = { "", "", "", "", "", "", "",};
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -57,7 +57,7 @@ static const Layout layouts[] = {
 
 /* key definitions */
 #define MODKEY Mod4Mask
-#define TAGKEYS(KEY,TAG) \
+#define TAGKEYS(KEY, TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
@@ -70,8 +70,14 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
+
+/* voice */
 static const char *upvol[] = {"amixer", "set", "Master", "3+", NULL};
 static const char *downvol[] = {"amixer", "set", "Master", "3-", NULL};
+
+/* some useful application */
+static const char *netease_cloud_music[] = {"netease-cloud-music", "--force-device-scale-factor=1.3", NULL};
+static const char *pcmanfm[] = {"pcmanfm", NULL};
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -107,8 +113,8 @@ static Key keys[] = {
 	TAGKEYS(                        XK_5,                      4)
 	TAGKEYS(                        XK_6,                      5)
 	TAGKEYS(                        XK_7,                      6)
-	TAGKEYS(                        XK_8,                      7)
-	TAGKEYS(                        XK_9,                      8)
+	{ MODKEY,						XK_o,	   spawn,		   { .v = pcmanfm } },
+	{ MODKEY,						XK_n,	   quick_open,	   { .v = netease_cloud_music } },
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
 

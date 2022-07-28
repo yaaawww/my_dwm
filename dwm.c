@@ -127,6 +127,7 @@ typedef struct {
 	void (*arrange)(Monitor *);
 } Layout;
 
+/* only two Monitors: mons selmon */
 struct Monitor {
 	char ltsymbol[16];
 	float mfact;
@@ -137,7 +138,7 @@ struct Monitor {
 	int wx, wy, ww, wh;   /* window area  */
 	unsigned int seltags;
 	unsigned int sellt;
-	unsigned int tagset[2];
+	unsigned int tagset[2]; /* maybe true of false ??? */
 	int showbar;
 	int topbar;
 	Client *clients;
@@ -256,6 +257,7 @@ static void updatesystray(void);
 static void updatesystrayicongeom(Client *i, int w, int h);        static void updatetitle(Client *c);
 static void updatesystrayiconstate(Client *i, XPropertyEvent *ev); static void updatewindowtype(Client *c);
 static void updatewmhints(Client *c);
+static void quick_open(const Arg *arg);
 static void view(const Arg *arg);
 static Client *wintoclient(Window w);
 static Monitor *wintomon(Window w);
@@ -2416,13 +2418,34 @@ updatewmhints(Client *c)
 }
 
 void
+quick_open(const Arg *arg) {
+	unsigned int ui = 1 << 6;
+	if ((ui & TAGMASK) == selmon->tagset[selmon->seltags])
+		return;
+	selmon->seltags ^= 1; /* toggle sel tagset */
+	if (ui & TAGMASK)
+		selmon->tagset[selmon->seltags] = ui & TAGMASK; // save current tags
+	focus(NULL);
+	arrange(selmon);
+	usleep(500000);
+	spawn(arg);
+}
+
+/* target: shift the tag
+ * arg: ui 0000000, 000*000
+ * TAGMASK =  1111111
+ * tagset: there are only two tags
+ * */
+
+void
 view(const Arg *arg)
 {
+	// check equaling current tags
 	if ((arg->ui & TAGMASK) == selmon->tagset[selmon->seltags])
 		return;
 	selmon->seltags ^= 1; /* toggle sel tagset */
 	if (arg->ui & TAGMASK)
-		selmon->tagset[selmon->seltags] = arg->ui & TAGMASK;
+		selmon->tagset[selmon->seltags] = arg->ui & TAGMASK; // save current tags
 	focus(NULL);
 	arrange(selmon);
 }
