@@ -1,4 +1,4 @@
-/* See LICENSE file for copyright and license details.
+ /* See LICENSE file for copyright and license details.
  *
  * dynamic window manager is designed like any other X client as well. It is
  * driven through handling X events. In contrast to other X clients, a window
@@ -83,7 +83,8 @@ enum { WMProtocols, WMDelete, WMState, WMTakeFocus, WMLast }; /* default atoms *
 enum { ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle,
        ClkClientWin, ClkRootWin, ClkLast }; /* clicks */
 
-typedef union {
+/* to convert mutiply params we'd batter use struct maybe bss can help save space */
+typedef struct {
 	int i;
 	unsigned int ui;
 	float f;
@@ -2419,15 +2420,8 @@ updatewmhints(Client *c)
 
 void
 quick_open(const Arg *arg) {
-	unsigned int ui = 1 << 6;
-	if ((ui & TAGMASK) == selmon->tagset[selmon->seltags])
-		return;
-	selmon->seltags ^= 1; /* toggle sel tagset */
-	if (ui & TAGMASK)
-		selmon->tagset[selmon->seltags] = ui & TAGMASK; // save current tags
-	focus(NULL);
-	arrange(selmon);
-	usleep(500000);
+	view(arg);
+	usleep(300000);
 	spawn(arg);
 }
 
