@@ -270,11 +270,11 @@ static void zoom(const Arg *arg);
 
 /* variables */
 static Systray *systray = NULL;
-static const char autostartblocksh[] = "autostart_blocking.sh";
-static const char autostartsh[] = "autostart.sh";
+//static const char autostartblocksh[] = "autostart_blocking.sh";
+//static const char autostartsh[] = "autostart.sh";
 static const char broken[] = "broken";
-static const char dwmdir[] = "dwm";
-static const char localshare[] = ".local/share";
+//static const char dwmdir[] = "dwm";
+//static const char localshare[] = ".local/share";
 static char stext[256];
 static int screen;
 static int sw, sh;           /* X display screen geometry width, height */

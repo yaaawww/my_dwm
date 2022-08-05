@@ -1,7 +1,7 @@
-/* See LICENSE file for copyright and license details. */
+#include "theme/tokyonight.h"
 
 /* appearance */
-static const unsigned int borderpx  = 6;        /* border pixel of windows */
+static const unsigned int borderpx  = 5;        /* border pixel of windows */
 static const unsigned int gappx     = 8;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 
@@ -18,17 +18,6 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "Hack Nerd Font:size=14", "WenQuanYi Zen Hei Mono:size=14"};
 static const char dmenufont[]       = "monospace:size=14";
-static const char col_gray1[]       = "#292045";
-static const char col_gray2[]       = "#5f4f72";
-static const char col_gray3[]       = "#715f9e";
-static const char col_gray4[]       = "#e1dae9";
-static const char col_gray5[]		= "#bba3b1";
-static const char col_cyan[]        = "#1f1e33";
-static const char *colors[][3]      = {
-	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray5, col_gray2, col_gray3 },
-	[SchemeSel]  = { col_gray4, col_gray1,  col_cyan },
-};
 
 /* tagging */
 static const char *tags[] = { "", "", "", "", "", "", "",};
@@ -69,54 +58,60 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", norm_bg, "-nf", norm_fg, "-sb", sel_bg, "-sf", sel_fg, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
 
 /* voice */
 static const char *upvol[] = {"amixer", "set", "Master", "3+", NULL};
 static const char *downvol[] = {"amixer", "set", "Master", "3-", NULL};
 
+/* light */
+static const char *uplight[] = {"brightnessctl", "set", "+1000", NULL};
+static const char *downlight[] = {"brightnessctl", "set", "1000-", NULL};
+
 /* some useful application */
 static const char *netease_cloud_music[] = {"netease-cloud-music", "--force-device-scale-factor=1.3", NULL};
 static const char *pcmanfm[] = {"pcmanfm", NULL};
 
 static Key keys[] = {
-	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,						XK_bracketleft,	       spawn,		   {.v = downvol } },
-	{ MODKEY,						XK_bracketright,	   spawn,		   {.v = upvol } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
-	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_Return, zoom,           {0} },
-	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_space,  setlayout,      {0} },
-	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	TAGKEYS(                        XK_1,                      0)
-	TAGKEYS(                        XK_2,                      1)
-	TAGKEYS(                        XK_3,                      2)
-	TAGKEYS(                        XK_4,                      3)
-	TAGKEYS(                        XK_5,                      4)
-	TAGKEYS(                        XK_6,                      5)
-	TAGKEYS(                        XK_7,                      6)
-	{ MODKEY,						XK_o,	   spawn,		   { .v = pcmanfm } },
-	{ MODKEY,						XK_n,	   quick_open,	   { .ui = 1 << 6, .v = netease_cloud_music } },
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	/* modifier                     key					function        argument */
+	{ MODKEY,                       XK_p,				 spawn,          {.v = dmenucmd } },
+	{ MODKEY|ShiftMask,             XK_Return,			 spawn,			 {.v = termcmd } },
+	{ MODKEY,						XK_bracketleft,	     spawn,		     {.v = downvol } },
+	{ MODKEY,						XK_bracketright,     spawn,		     {.v = upvol } },
+	{ MODKEY,						XK_equal,	     	 spawn,			 {.v = uplight } },
+	{ MODKEY,						XK_minus,       	 spawn,			 {.v = downlight } },
+	{ MODKEY,                       XK_b,				 togglebar,      {0} },
+	{ MODKEY,                       XK_j,     			 focusstack,     {.i = +1 } },
+	{ MODKEY,                       XK_k,     			 focusstack,     {.i = -1 } },
+	//{ MODKEY,                       XK_i,     			 incnmaster,     {.i = +1 } },
+	//{ MODKEY,                       XK_d,     			 incnmaster,     {.i = -1 } },
+	{ MODKEY,                       XK_h,     			 setmfact,       {.f = -0.05} },
+	{ MODKEY,                       XK_l,     			 setmfact,       {.f = +0.05} },
+	{ MODKEY,                       XK_Return,			 zoom,           {0} },
+	{ MODKEY,                       XK_Tab,   			 view,           {0} },
+	{ MODKEY|ShiftMask,             XK_c,     			 killclient,     {0} },
+	{ MODKEY,                       XK_t,     			 setlayout,      {.v = &layouts[0]} },
+	{ MODKEY,                       XK_f,     			 setlayout,      {.v = &layouts[1]} },
+	{ MODKEY,                       XK_m,     			 setlayout,      {.v = &layouts[2]} },
+	{ MODKEY,                       XK_space, 			 setlayout,      {0} },
+	{ MODKEY|ShiftMask,             XK_space, 			 togglefloating, {0} },
+	{ MODKEY,                       XK_0,     			 view,           {.ui = ~0 } },
+	{ MODKEY|ShiftMask,             XK_0,     			 tag,            {.ui = ~0 } },
+	{ MODKEY,                       XK_comma, 			 focusmon,       {.i = -1 } },
+	{ MODKEY,                       XK_period,			 focusmon,       {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_comma, 			 tagmon,         {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_period,			 tagmon,         {.i = +1 } },
+	TAGKEYS(                        XK_1,     			                 0)
+	TAGKEYS(                        XK_2,     			                 1)
+	TAGKEYS(                        XK_3,     			                 2)
+	TAGKEYS(                        XK_4,     			                 3)
+	TAGKEYS(                        XK_5,     			                 4)
+	TAGKEYS(                        XK_6,     			                 5)
+	TAGKEYS(                        XK_7,     			                 6)
+	{ MODKEY,						XK_o,	  			 spawn,			 { .v = pcmanfm } },
+	{ MODKEY,						XK_n,	  			 quick_open,	 { .ui = 1 << 6, .v = netease_cloud_music } },
+	{ MODKEY|ShiftMask,             XK_q,     			 quit,           {0} },
 };
 
 /* button definitions */
