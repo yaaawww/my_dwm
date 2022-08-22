@@ -1,4 +1,5 @@
 #include "theme/tokyonight.h"
+#include <stdio.h>
 
 /* appearance */
 static const unsigned int borderpx  = 5;        /* border pixel of windows */
@@ -20,7 +21,7 @@ static const char *fonts[]          = { "Hack Nerd Font:size=14", "WenQuanYi Zen
 static const char dmenufont[]       = "monospace:size=14";
 
 /* tagging */
-static const char *tags[] = { "", "", "", "", "", "", "",};
+static const char *tags[] = { "", "", "", "", "", "", "",};
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -71,6 +72,7 @@ static const char *downlight[] = {"brightnessctl", "set", "1000-", NULL};
 
 /* some useful application */
 static const char *netease_cloud_music[] = {"netease-cloud-music", "--force-device-scale-factor=1.3", NULL};
+static const char *spotify[] = {"gtk-launch", "spotify-adblock.desktop", NULL};
 static const char *pcmanfm[] = {"pcmanfm", NULL};
 
 static Key keys[] = {
@@ -110,7 +112,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_6,     			                 5)
 	TAGKEYS(                        XK_7,     			                 6)
 	{ MODKEY,						XK_o,	  			 spawn,			 { .v = pcmanfm } },
-	{ MODKEY,						XK_n,	  			 quick_open,	 { .ui = 1 << 6, .v = netease_cloud_music } },
+	{ MODKEY,						XK_n,	  			 quick_open,	 { .ui = 1 << 6, .v = spotify } },
 	{ MODKEY|ShiftMask,             XK_q,     			 quit,           {0} },
 };
 
